@@ -1,0 +1,16 @@
+{
+    "tagTable.columns.createdBy": "Created by",
+    "tagTable.columns.createdOn": "Created on",
+    "tagTable.columns.name": "Name",
+    "tagTable.columns.tickets": "Tickets",
+    "tagTable.createRow.btn.cancel": "Cancel",
+    "tagTable.createRow.btn.save": "Save",
+    "tagDropdown.createNewTag.btn.cancel": "Cancel",
+    "tagDropdown.createNewTag.btn.save": "Save",
+    "tagDropdown.createNewTag.nameField.label": "Name",
+    "tagDropdown.createNewTag.nameField.placeholder": "Enter tag name",
+    "tagDropdown.createNewTag.title": "Add new tag",
+    "tagDropdown.empty": "No tags",
+    "tagDropdown.error.maxTagsPerTicket": "Can't add more than 20 tags.",
+    "tagDropdown.searchInputPlaceholder": "Search"
+  }
