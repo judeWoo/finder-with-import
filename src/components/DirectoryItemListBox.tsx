@@ -18,12 +18,12 @@ const DirectoryItemListBox = () => {
   return sorted.length > 0 ? (
     <>
       {sorted.map(
-        action((key) => {
+        action((key, index) => {
           const { content, path, items } = selectedItemByItemDepth[key] || {};
           return content && path ? (
             <FileContent key={uuid()} content={content} path={path} />
           ) : (
-            <DirectoryItemList key={uuid()} items={items} />
+            <DirectoryItemList depth={index + 1} key={uuid()} items={items} />
           );
         })
       )}

@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef } from "react";
 
 const minWidth = 240;
 
-const useResize = () => {
+const useResize = (depth: number, setWidthByDepth: Function | undefined) => {
   const listRef = useRef<HTMLUListElement>(null);
   const hrRef = useRef<HTMLHRElement>(null);
   const m_pos = useRef(0);
@@ -17,11 +17,17 @@ const useResize = () => {
             ? 0
             : e.x - m_pos.current;
         m_pos.current = e.x;
-        listRef.current.style.width =
-          parseInt(getComputedStyle(listRef.current, "").width, 10) + dx + "px";
+        // listRef.current.style.width =
+        //   parseInt(getComputedStyle(listRef.current, "").width, 10) + dx + "px";
+        if (setWidthByDepth) {
+          setWidthByDepth(
+            depth,
+            parseInt(getComputedStyle(listRef.current, "").width, 10) + dx
+          );
+        }
       }
     },
-    [m_pos, hrRef, listRef]
+    [depth, setWidthByDepth, m_pos, hrRef, listRef]
   );
   const onMouseDown = useCallback(
     (event: React.MouseEvent<HTMLHRElement>) => {

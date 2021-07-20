@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import { action, makeAutoObservable, makeObservable } from "mobx";
 import RootStore from "./RootStore";
 
 type UIStoreObjectProps = {
@@ -10,20 +10,24 @@ export default class UIStore {
 
   isImportErrorPopupActive = false;
 
-  activeStateByItemLabel: UIStoreObjectProps = {};
+  activeItemLabelByDepth: UIStoreObjectProps = {};
 
   widthByDepth: UIStoreObjectProps = {};
 
   selectedLabel = "";
 
   constructor(rootStore: RootStore) {
-    makeAutoObservable(this, { rootStore: false, widthByDepth: false });
+    makeAutoObservable(this, { rootStore: false, setWidthByDepth: false });
+    makeObservable(this, {
+      setWidthByDepth: action.bound,
+    });
     this.rootStore = rootStore;
   }
 
   clear() {
     this.isImportErrorPopupActive = false;
-    this.activeStateByItemLabel = {};
+    this.activeItemLabelByDepth = {};
+    this.widthByDepth = {};
     this.selectedLabel = "";
   }
 
@@ -31,14 +35,20 @@ export default class UIStore {
     this.isImportErrorPopupActive = isImportErrorPopupActive;
   }
 
-  setActiveStateByItemLabel(depth: number, label: string) {
-    Object.keys(this.activeStateByItemLabel).forEach((key) => {
+  setActiveItemLabelByDepth(depth: number, label: string) {
+    Object.keys(this.activeItemLabelByDepth).forEach((key) => {
       if (Number(key) >= depth) {
-        this.activeStateByItemLabel[key] = "";
+        this.activeItemLabelByDepth[key] = "";
       }
     });
 
-    this.activeStateByItemLabel[depth] = label;
+    Object.keys(this.widthByDepth).forEach((key) => {
+      if (Number(key) > depth) {
+        this.widthByDepth[key] = 0;
+      }
+    });
+
+    this.activeItemLabelByDepth[depth] = label;
   }
 
   setWidthByDepth(depth: number, width: number) {

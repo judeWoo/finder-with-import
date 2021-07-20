@@ -1,17 +1,29 @@
+import { useContext } from "react";
+import { observer } from "mobx-react-lite";
 import { v4 as uuid } from "uuid";
 import Directory from "../interfaces/Directory";
 import DirectoryItem from "./DirectoryItem";
 import useResize from "../hooks/useResize";
+import StoreContext from "../contexts/StoreContext";
 
 type Props = {
+  depth?: number;
   items?: Array<Directory>;
 };
 
-const DirectoryItemList = ({ items }: Props) => {
-  const { onMouseDown, hrRef, listRef } = useResize();
+const DirectoryItemList = ({ depth = 0, items }: Props) => {
+  const rootStore = useContext(StoreContext);
+  const uiStore = rootStore?.uiStore;
+  const widthByDepth = uiStore?.widthByDepth;
+  const setWidthByDepth = uiStore?.setWidthByDepth;
+  const { onMouseDown, hrRef, listRef } = useResize(depth, setWidthByDepth);
 
   return items && items.length > 0 ? (
-    <ul className="directory-item-list sub-list" ref={listRef}>
+    <ul
+      className="directory-item-list sub-list"
+      ref={listRef}
+      style={widthByDepth && widthByDepth[depth] ? { width: `${widthByDepth[depth]}px` } : undefined}
+    >
       {items
         .filter((item) => !item.content)
         .sort((item1, item2) => {
@@ -51,4 +63,4 @@ const DirectoryItemList = ({ items }: Props) => {
   ) : null;
 };
 
-export default DirectoryItemList;
+export default observer(DirectoryItemList);

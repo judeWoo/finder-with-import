@@ -7,15 +7,26 @@ import useResize from "../hooks/useResize";
 
 const RootDirectoryItemList = () => {
   const rootStore = useContext(StoreContext);
-  const { onMouseDown, hrRef, listRef } = useResize();
   const fileExplorerStore = rootStore?.fileExplorerStore;
   const importedFile = fileExplorerStore?.importedFile;
   const processing = fileExplorerStore?.processing;
   const directory = fileExplorerStore?.directory;
   const { items } = directory || { items: [] };
+  const uiStore = rootStore?.uiStore;
+  const widthByDepth = uiStore?.widthByDepth;
+  const setWidthByDepth = uiStore?.setWidthByDepth;
+  const { onMouseDown, hrRef, listRef } = useResize(0, setWidthByDepth);
 
   return !processing && importedFile && directory ? (
-    <ul className="directory-item-list" ref={listRef}>
+    <ul
+      className="directory-item-list"
+      ref={listRef}
+      style={
+        widthByDepth && widthByDepth[0]
+          ? { width: `${widthByDepth[0]}px` }
+          : undefined
+      }
+    >
       {items
         .filter((item) => !item.content)
         .sort((item1, item2) => {

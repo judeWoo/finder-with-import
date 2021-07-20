@@ -15,7 +15,7 @@ const DirectoryItem = ({ item }: Props) => {
   const rootStore = useContext(StoreContext);
   const fileExplorerStore = rootStore?.fileExplorerStore;
   const uiStore = rootStore?.uiStore;
-  const activeStateByItemLabel = uiStore?.activeStateByItemLabel || {};
+  const activeItemLabelByDepth = uiStore?.activeItemLabelByDepth || {};
   const selectedLabel = uiStore?.selectedLabel || "";
   const label = item?.label || "";
   const depth = item?.depth || 0;
@@ -24,7 +24,7 @@ const DirectoryItem = ({ item }: Props) => {
       e.stopPropagation();
       fileExplorerStore?.setSelectedItemByItemDepth(item);
       uiStore?.setSelectedLabel(label);
-      uiStore?.setActiveStateByItemLabel(depth, label);
+      uiStore?.setActiveItemLabelByDepth(depth, label);
     },
     [depth, label, item, fileExplorerStore, uiStore]
   );
@@ -33,7 +33,7 @@ const DirectoryItem = ({ item }: Props) => {
     <li
       className={clsx({
         "directory-item": true,
-        active: activeStateByItemLabel[depth] === item?.label,
+        active: activeItemLabelByDepth[depth] === item?.label,
         selected: selectedLabel === item?.label,
       })}
       onClick={onClick}
