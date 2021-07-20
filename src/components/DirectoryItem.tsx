@@ -22,7 +22,7 @@ const DirectoryItem = ({ item }: Props) => {
   const onClick = useCallback(
     (e) => {
       e.stopPropagation();
-      fileExplorerStore?.setSelectedItemByItemDepth(item);
+      fileExplorerStore?.setSelectedItemByDepth(item);
       uiStore?.setSelectedLabel(label);
       uiStore?.setActiveItemLabelByDepth(depth, label);
     },

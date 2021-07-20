@@ -7,7 +7,7 @@ import RootStore from "./RootStore";
 export default class FileExplorerStore {
   processing = false;
 
-  selectedItemByItemDepth: CustomObject = {};
+  selectedItemByDepth: CustomObject = {};
 
   rootStore: RootStore;
 
@@ -24,7 +24,7 @@ export default class FileExplorerStore {
   }
 
   clear() {
-    this.selectedItemByItemDepth = {};
+    this.selectedItemByDepth = {};
     this.directory = { items: [] };
     this.rootStore.uiStore.clear();
   }
@@ -104,13 +104,13 @@ export default class FileExplorerStore {
     this.importedFile = importedFile;
   }
 
-  setSelectedItemByItemDepth(item: Directory | undefined) {
-    Object.keys(this.selectedItemByItemDepth).forEach((key) => {
+  setSelectedItemByDepth(item: Directory | undefined) {
+    Object.keys(this.selectedItemByDepth).forEach((key) => {
       if (Number(key) >= (item?.depth || "")) {
-        this.selectedItemByItemDepth[key] = undefined;
+        this.selectedItemByDepth[key] = undefined;
       }
     });
 
-    this.selectedItemByItemDepth[item?.depth || ""] = item;
+    this.selectedItemByDepth[item?.depth || ""] = item;
   }
 }

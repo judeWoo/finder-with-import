@@ -71,6 +71,10 @@ ul {
   color: var(--black);
 }
 
+.directory-item:focus {
+  outline: none;
+}
+
 .directory-item:hover,
 .directory-item.active {
   background-color: var(--neutral-5);
