@@ -13,7 +13,7 @@ type Props = {
 
 const DirectoryItem = ({ item }: Props) => {
   const rootStore = useContext(StoreContext);
-  const fileExplorerStore = rootStore?.fileExplorerStore;
+  const finderStore = rootStore?.finderStore;
   const uiStore = rootStore?.uiStore;
   const activeItemLabelByDepth = uiStore?.activeItemLabelByDepth || {};
   const selectedLabel = uiStore?.selectedLabel || "";
@@ -22,11 +22,11 @@ const DirectoryItem = ({ item }: Props) => {
   const onClick = useCallback(
     (e) => {
       e.stopPropagation();
-      fileExplorerStore?.setSelectedItemByDepth(item);
+      finderStore?.setSelectedItemByDepth(item);
       uiStore?.setSelectedLabel(label);
       uiStore?.setActiveItemLabelByDepth(depth, label);
     },
-    [depth, label, item, fileExplorerStore, uiStore]
+    [depth, label, item, finderStore, uiStore]
   );
 
   return (

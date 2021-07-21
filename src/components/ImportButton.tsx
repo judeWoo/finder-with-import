@@ -4,7 +4,7 @@ import StoreContext from "../contexts/StoreContext";
 
 const ImportButton = () => {
   const rootStore = useContext(StoreContext);
-  const fileExplorerStore = rootStore?.fileExplorerStore;
+  const finderStore = rootStore?.finderStore;
   const uiStore = rootStore?.uiStore;
   const fileElemRef = useRef<HTMLInputElement>(null);
   const onClick = useCallback(() => {
@@ -14,14 +14,14 @@ const ImportButton = () => {
   }, [fileElemRef]);
   const onChange = useCallback(
     (e: { target: HTMLInputElement }) => {
-      if (!e.target.files || !uiStore || !fileExplorerStore) return;
+      if (!e.target.files || !uiStore || !finderStore) return;
 
       const fileList = e.target.files;
       const file = fileList[0];
 
       if (file && file.type !== "application/json") {
-        fileExplorerStore.setImportedFile(undefined);
-        fileExplorerStore.clear();
+        finderStore.setImportedFile(undefined);
+        finderStore.clear();
         uiStore.setisImportErrorPopupActive(true);
         return;
       }
@@ -33,31 +33,31 @@ const ImportButton = () => {
             try {
               const input = JSON.parse(text);
 
-              if (!fileExplorerStore.isValidImportedFile(input)) {
-                fileExplorerStore.setImportedFile(undefined);
-                fileExplorerStore.clear();
+              if (!finderStore.isValidImportedFile(input)) {
+                finderStore.setImportedFile(undefined);
+                finderStore.clear();
                 uiStore.setisImportErrorPopupActive(true);
                 return;
               } else {
-                fileExplorerStore.setImportedFile(input);
-                fileExplorerStore.processImportedFile();
+                finderStore.setImportedFile(input);
+                finderStore.processImportedFile();
               }
             } catch (error) {
-              fileExplorerStore.setImportedFile(undefined);
-              fileExplorerStore.clear();
+              finderStore.setImportedFile(undefined);
+              finderStore.clear();
               uiStore.setisImportErrorPopupActive(true);
               return;
             }
           })
           .catch(() => {
-            fileExplorerStore.setImportedFile(undefined);
-            fileExplorerStore.clear();
+            finderStore.setImportedFile(undefined);
+            finderStore.clear();
             uiStore.setisImportErrorPopupActive(true);
             return;
           });
       }
     },
-    [fileExplorerStore, uiStore]
+    [finderStore, uiStore]
   );
 
   return (

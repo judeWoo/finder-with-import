@@ -4,7 +4,7 @@ import Directory from "../interfaces/Directory";
 import ImportedFile from "../interfaces/ImportedFile";
 import RootStore from "./RootStore";
 
-export default class FileExplorerStore {
+export default class FinderStore {
   processing = false;
 
   selectedItemByDepth: CustomObject = {};

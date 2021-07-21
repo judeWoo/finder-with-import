@@ -1,13 +1,13 @@
-import FileExplorerStore from "./FileExplorerStore";
+import FinderStore from "./FinderStore";
 import UIStore from "./UIStore";
 
 export default class RootStore {
-  fileExplorerStore: FileExplorerStore;
+  finderStore: FinderStore;
 
   uiStore: UIStore;
 
   constructor() {
-    this.fileExplorerStore = new FileExplorerStore(this);
+    this.finderStore = new FinderStore(this);
     this.uiStore = new UIStore(this);
   }
 }

@@ -8,9 +8,8 @@ import StoreContext from "../contexts/StoreContext";
 
 const DirectoryItemListBox = () => {
   const rootStore = useContext(StoreContext);
-  const fileExplorerStore = rootStore?.fileExplorerStore;
-  const selectedItemByDepth =
-    fileExplorerStore?.selectedItemByDepth || {};
+  const finderStore = rootStore?.finderStore;
+  const selectedItemByDepth = finderStore?.selectedItemByDepth || {};
   const sorted = Object.keys(toJS(selectedItemByDepth)).sort(
     (a, b) => Number(a) - Number(b)
   );
@@ -18,7 +17,7 @@ const DirectoryItemListBox = () => {
   return sorted.length > 0 ? (
     <>
       {sorted.map(
-        action((key, index) => {
+        action("Render DirectoryItemListBox", (key, index) => {
           const { content, path, items } = selectedItemByDepth[key] || {};
           return content && path ? (
             <FileContent key={uuid()} content={content} path={path} />

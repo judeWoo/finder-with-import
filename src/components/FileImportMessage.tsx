@@ -5,8 +5,8 @@ import StoreContext from "../contexts/StoreContext";
 
 const FileImportMessage = () => {
   const rootStore = useContext(StoreContext);
-  const fileExplorerStore = rootStore?.fileExplorerStore;
-  const importedFile = fileExplorerStore?.importedFile;
+  const finderStore = rootStore?.finderStore;
+  const importedFile = finderStore?.importedFile;
 
   return !importedFile ? (
     <div className="file-import-message">
